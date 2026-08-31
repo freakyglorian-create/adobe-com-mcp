@@ -13,7 +13,7 @@
 
 ## 功能总览
 
-共 **64 个工具**，覆盖日常设计 + 批量体力活自动化：
+共 **63 个工具**，覆盖日常设计 + 批量体力活自动化：
 
 ### Photoshop — 基础工具（19 个）
 
@@ -233,14 +233,11 @@ macOS 上无法使用 Windows 的 COM 接口，因此提供了独立的 `server_
 
 ### 已实现的工具（Mac 版）
 
-Photoshop：`ps_create_document` / `ps_get_active_info` / `ps_list_documents` /
-`ps_close_document` / `ps_add_layer` / `ps_add_text_layer` / `ps_fill_layer` /
-`ps_set_layer_opacity` / `ps_set_foreground_color` / `ps_resize_document` /
-`ps_save_as_png` / `ps_save_as_jpg` / `ps_list_all_layers` / `ps_export_all_layers_to_png`
+**与 Windows 版完全一致，共 63 个工具**（48 个 `ps_*` + 15 个 `ai_*`）。
 
-Illustrator：`ai_create_document` / `ai_get_active_info` / `ai_list_documents` /
-`ai_close_document` / `ai_add_rectangle` / `ai_add_ellipse` / `ai_add_polygon` /
-`ai_add_text` / `ai_export_svg` / `ai_export_png` / `ai_batch_replace_text`
+工具名、参数、返回结构均与上文的 Photoshop / Illustrator 工具表一一对应，
+无需重复列出——使用时直接参照上表即可。两者唯一的区别是底层执行方式：
+Windows 走 COM（pywin32），macOS 走 AppleScript + ExtendScript。
 
 > ⚠️ Mac 版为独立后端，需在 macOS 实机调试（不同 PS/AI 版本的 AppleScript 接口略有差异）。
 > 首次运行会要求「自动化」权限：系统设置 → 隐私与安全性 → 自动化，允许 python 控制 Photoshop / Illustrator。
