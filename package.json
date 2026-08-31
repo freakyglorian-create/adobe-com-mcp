@@ -1,0 +1,14 @@
+{
+  "name": "adobe-com-mcp",
+  "version": "1.0.0",
+  "description": "Adobe Photoshop + Illustrator MCP server via COM automation (Windows, PS 2020+ / AI CS6+). No UXP required.",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node test_mcp.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.4"
+  }
+}
