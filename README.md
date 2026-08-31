@@ -2,7 +2,12 @@
 
 用自然语言在 TRAE 里操控 **Photoshop** 和 **Illustrator**。
 
-基于 Windows COM 自动化 + Python MCP，无需 UXP 插件，支持 PS 2020+ 和 AI CS6+。
+无需 UXP 插件，支持 PS 2020+ 和 AI CS6+。
+
+| 平台 | 文件 | 自动化方式 |
+|------|------|-----------|
+| Windows | `server.py` | COM 自动化（pywin32） |
+| macOS | `server_mac.py` | AppleScript + ExtendScript |
 
 ---
 
@@ -199,6 +204,46 @@ pip install pywin32 "mcp<2"
 
 **拼长图：**
 > "把当前文档图层排成纵向长条，间距 10px"
+
+---
+
+## Mac 版使用（macOS）
+
+macOS 上无法使用 Windows 的 COM 接口，因此提供了独立的 `server_mac.py`，通过
+系统自带的 **AppleScript**（`osascript`）+ Photoshop / Illustrator 的 **`do javascript`**
+（ExtendScript）实现同样的自动化，**工具名与 Windows 版完全一致**（`ps_*` / `ai_*`）。
+
+### 环境要求
+
+| 组件 | 支持版本 |
+|------|---------|
+| 操作系统 | macOS（需支持 AppleScript） |
+| Photoshop | 任意支持 AppleScript 的版本（CS3+） |
+| Illustrator | 任意支持 AppleScript 的版本（CS3+） |
+| Python | 3.10+，`pip install "mcp<2"` |
+
+> ⚠️ macOS 无需安装任何 COM / pywin32 相关依赖，系统自带 `osascript`。
+
+### 配置（TRAE 中添加 MCP 服务器）
+
+- **名称**：`adobe-mac-mcp`
+- **命令**：`python`
+- **参数**：`/你的路径/adobe-com-mcp/server_mac.py`
+- **工作目录**：`/你的路径/adobe-com-mcp`
+
+### 已实现的工具（Mac 版）
+
+Photoshop：`ps_create_document` / `ps_get_active_info` / `ps_list_documents` /
+`ps_close_document` / `ps_add_layer` / `ps_add_text_layer` / `ps_fill_layer` /
+`ps_set_layer_opacity` / `ps_set_foreground_color` / `ps_resize_document` /
+`ps_save_as_png` / `ps_save_as_jpg` / `ps_list_all_layers` / `ps_export_all_layers_to_png`
+
+Illustrator：`ai_create_document` / `ai_get_active_info` / `ai_list_documents` /
+`ai_close_document` / `ai_add_rectangle` / `ai_add_ellipse` / `ai_add_polygon` /
+`ai_add_text` / `ai_export_svg` / `ai_export_png` / `ai_batch_replace_text`
+
+> ⚠️ Mac 版为独立后端，需在 macOS 实机调试（不同 PS/AI 版本的 AppleScript 接口略有差异）。
+> 首次运行会要求「自动化」权限：系统设置 → 隐私与安全性 → 自动化，允许 python 控制 Photoshop / Illustrator。
 
 ---
 
